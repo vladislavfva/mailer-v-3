@@ -29,7 +29,6 @@ app.post('/registration', (req, res) => {
     }
     mailer(message)
     user = req.body
-    res.redirect('/registration')
 })
 app.get('/registration', (req, res) => {
     if(typeof user !=='object') return res.sendFile(__dirname + '/registration.html')
