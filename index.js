@@ -24,7 +24,7 @@ app.post('/registration', (req, res) => {
 
         ${req.body.promo ? `Вы подписаны на рассылку наших акций и предложений,
         чтобы отписаться от рассылки перейдите по ссылке
-        <a href="http://localhost:3001/unsubscribe/${req.body.email}">отписаться от рассыки</a>` : ''}
+        <a href="http://18.218.190.153:3001/unsubscribe/${req.body.email}">отписаться от рассыки</a>` : ''}
         <p>Данное письмо не требует ответа!</p>`
     }
     mailer(message)
@@ -41,4 +41,4 @@ app.get('/unsubscribe/:email', (req, res) => {
     res.send(`Ваш email: ${req.params.email} удалён из списка рассылки`)
 })
 
-app.listen(PORT, () => console.log(`server listening at http://localhost:${PORT}/registration`))
+app.listen(PORT, () => console.log(`server listening at http://18.218.190.153:${PORT}/registration`))
