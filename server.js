@@ -1,21 +1,41 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const nodemailer = require('nodemailer');
 
 const app = express();
-const port = process.env.PORT || 443;
-
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(cors());
 
-app.post('/form-submit', (req, res) => {
-  const formData = req.body;
-  console.log(formData);
-  // здесь можно добавить код для обработки данных формы
-  res.send('Данные формы успешно отправлены на сервер');
+app.post('/api/send-email', (req, res) => {
+  const { name, email, message } = req.body;
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.mail.me.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'vladislavfva@icloud.com',
+      pass: 'awwt-cqoq-jehn-linr'
+    }
+  });
+
+  const mailOptions = {
+    from: email,
+    to: 'recipient-email-address',
+    subject: `Message from ${name}`,
+    text: message
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send('An error occurred while sending the email.');
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.status(200).send('Email sent successfully.');
+    }
+  });
 });
 
-app.listen(port, () => {
-  console.log(`Сервер запущен на порту ${port}`);
+app.listen(443, () => {
+  console.log('Server started on port 443');
 });
